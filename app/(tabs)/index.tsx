@@ -4,14 +4,28 @@ import {TextInput, IconButton, Surface, Text, Button, Pressable} from '@react-na
 import { Octicons } from '@expo/vector-icons';
 import MiniCard from '../../components/minCard';
 import MediumCard from '../../components/meduimCard';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 
 export default function TabOneScreen() {
 
-  const num:number[] = [1,2,3,4,5,6,7,8,9,0];
-  const numColumns:number = 2
+  const [meals, setMeals]= useState([]);
 
+  const numColumns:number = 2
+  const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Miscellaneous'
+  useEffect(() =>{
+    const fetchdata = async () =>{
+      try{
+        const fetch = await axios.get(url).then((res) => {
+          setMeals(res.data.meals)
+        })
+      }catch(err){console.log(err)}
+    }
+
+    fetchdata()
+  },)
   const WIDTH = Dimensions.get('window').width
 
   return (
@@ -72,15 +86,16 @@ export default function TabOneScreen() {
         </View>
       
       <View>
-        <FlatList
-        numColumns={numColumns}
-        data={num}
-        
+        <FlatList 
+        data={meals}
         scrollEnabled={false}
-        renderItem={()=>(
-          <MediumCard
-           imageUrl={require('../../assets/images/img/burger.png')} 
-           title={'drinks'} />
+        numColumns={numColumns}
+        renderItem={({item}) =>(
+          <MediumCard 
+          imageUrl={{uri: item.strMealThumb}}
+          title={item.strMeal}
+          key={item.idMeal}
+          />
         )}
         />
       </View>

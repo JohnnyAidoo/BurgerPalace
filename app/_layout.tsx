@@ -1,8 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
@@ -38,16 +38,54 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const router = useRouter()
 
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{headerShadowVisible: false}}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          
           <Stack.Screen name="modal" options={{ presentation: 'fullScreenModal',
-          headerTitle:'', 
-          headerStyle:{backgroundColor:'#F4EBAA'}
-          }} />
+          headerTitle:'', headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25} />) ,
+          headerStyle:{backgroundColor:'#F4EBAA'},
+          headerRight:() =>(<Feather name='shopping-bag' size={20} />)
+          }}
+           />
+
+           <Stack.Screen name='cart' 
+           options={{headerStyle:{backgroundColor:'white'}, 
+           headerTitle:'My Cart List',
+           headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25} />) 
+            }}/>
+          
+           <Stack.Screen name='burgers' 
+           options={{headerStyle:{backgroundColor:'white'}, 
+           headerTitle:'My Cart List',
+           headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25} />) 
+            }}/>
+          
+           <Stack.Screen name='pizzas' 
+           options={{headerStyle:{backgroundColor:'white'}, 
+           headerTitle:'My Cart List',
+           headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25} />) 
+            }}/>
+           
+           <Stack.Screen name='drinks' 
+           options={{headerStyle:{backgroundColor:'white'}, 
+           headerTitle:'My Cart List',
+           headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25} />) 
+            }}/>
         </Stack>
       </ThemeProvider>
     </>
