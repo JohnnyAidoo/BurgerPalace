@@ -29,6 +29,7 @@ export default function TabLayout() {
             icon={<Feather name='bell' size={20} />}
             />
             <IconButton 
+            onPress={() => router.push('cart')}
             icon={<Feather name='shopping-bag' size={20} />}
             />
             
@@ -51,15 +52,6 @@ export default function TabLayout() {
             
           ),
          
-        }}
-      />
-      <Tabs.Screen
-        name="category"
-        options={{
-          headerStyle:{backgroundColor:'#fff'},
-          headerTitle:'Food Category',
-          title: 'Category',
-          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
       <Tabs.Screen
