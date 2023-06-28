@@ -1,6 +1,7 @@
 
 import { FontAwesome } from '@expo/vector-icons';
-import { Button, Pressable, Surface ,Text } from '@react-native-material/core';
+import { Avatar, Button, Icon, ListItem, Pressable, Surface ,Text } from '@react-native-material/core';
+import { useRouter } from 'expo-router';
 import {FlatList, View ,Image, Dimensions} from 'react-native'
 import { Swipeable } from 'react-native-gesture-handler';
 
@@ -8,6 +9,7 @@ function Cart() {
 
     const list = ['wee','wee','wee','wee']
     const WIDTH:number = Dimensions.get('window').width
+    const router = useRouter()
 
 
     return (
@@ -16,20 +18,15 @@ function Cart() {
         style={{backgroundColor:'white'}}
         data={list}
         renderItem={()=>(
-            <Surface elevation={1} style={{justifyContent:'space-around', flexDirection:'row', alignItems:'center',marginBottom:10}}>
-                <View style={{backgroundColor:'#e0e0e0', padding:10, borderRadius:10}} >
-                    <Image source={require('../assets/images/img/burger.png')} 
-                    style={{aspectRatio: 1, height:50}}
-                    />
-                </View>
-                <View>
-                    <Text>Sandwich Burger</Text>
-                    <Text>3</Text>
-                </View>
-                <View>
-                    <Text>$32.00</Text>
-                    
-                </View>
+            <Surface elevation={4} style={{marginVertical:5}}>
+                <ListItem
+    
+                leadingMode='avatar' 
+                title='Sandwich Burgur'
+                leading={<Avatar initials label='Burgur La' />}
+                secondaryText='3'
+                trailing={<Text style={{marginLeft:-20}}>30.00</Text>}
+                />
             </Surface>
         )}
         />
@@ -47,7 +44,8 @@ function Cart() {
       </Surface>
 
      
-      <Button title='Place Order' 
+      <Button title='Place Order'
+      onPress={() => router.push('checkout')} 
       style={{width:WIDTH/2}}
        color='#fcd22f' elevation={1} />
 

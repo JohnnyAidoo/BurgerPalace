@@ -1,38 +1,43 @@
 import { FontAwesome, Octicons } from '@expo/vector-icons';
 import { Surface, Button, IconButton, Pressable, Text, ListItem } from '@react-native-material/core';
+import {useSearchParams} from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import {useState} from 'react'
 import {ImageBackground, View, Image, Dimensions, ScrollView }  from 'react-native';
 
 const ingredients:string[] = ['pepper','tomato','dough','carrot','cabbages', 'alot']
+
+
 export default function ModalScreen() {
 
+  const lightcolor = '#FFF5B0'
+    const deepcolor = '#FFD24E'
 
   const [numOfOder, setNumberOfOder] = useState(1)
-
-
+  const {title, imageUrl, price} = useSearchParams()
+  const image = {uri: imageUrl};
   const [tabElement, setTabELement] = useState(Details);
   const WIDTH:number = Dimensions.get('window').width
 
 
   return (
   <>
-  <ScrollView style={{paddingBottom:500}}>
+  <ScrollView style={{paddingBottom:500, backgroundColor:'white'}}>
   <ImageBackground source={require('../assets/images/img/wave2.png')}
   resizeMode='cover'
+  style={{backgroundColor:'white'}}
   >
-  <View style={{height:150, alignItems:'center'}}>
-    <Image 
-    source={require('../assets/images/img/burger.png')}
+    <Image
+    id='banner'
+    source={{uri : imageUrl as string}}    
      resizeMode='center'
-     style={{height:110, alignItems:'center',}}
+     style={{height:200, alignItems:'center', borderRadius:10}}
      />
-  </View>
   </ImageBackground>
   <Surface style={{padding:10}}>
     <View style={{flexDirection:'row', justifyContent:'space-between', width:'100%'}}>
     <Text variant='h5' style={{fontWeight:'bold'}} >
-      Beff Burger
+      {title}
     </Text>
     <IconButton icon={<FontAwesome name='heart' size={15} color={'yellow'} />} />
     </View>
@@ -62,7 +67,7 @@ export default function ModalScreen() {
     {/* bottom  */}
     <Surface 
     style={{padding:10, position: 'absolute',bottom:0,
-    flexDirection:'row', backgroundColor:'#f9d368',width:WIDTH,
+    flexDirection:'row', backgroundColor: lightcolor ,width:WIDTH,
     justifyContent:'space-evenly'
     }}
      >
@@ -82,7 +87,7 @@ export default function ModalScreen() {
       </Surface>
 
      
-      <Button title={`$${numOfOder * 14} | Add To Cart`} color='#fcd22f' elevation={1} />
+      <Button title={`$${numOfOder * 14} | Add To Cart`} color={deepcolor} elevation={1} />
 
     </Surface>
     
@@ -102,6 +107,7 @@ function Ingredient() {
     <>
     {ingredients.map((ingredient) =>(
       <ListItem
+      key={ingredient}
       leading={<FontAwesome name='check' color={'#fcd22f'} />}
        title={ingredient} />
     ))}

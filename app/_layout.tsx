@@ -2,9 +2,10 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, useRouter } from 'expo-router';
+import { SplashScreen, Stack, useRouter, } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { useColorScheme , View } from 'react-native';
+import { IconButton } from '@react-native-material/core'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -43,49 +44,90 @@ function RootLayoutNav() {
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        
         <Stack screenOptions={{headerShadowVisible: false}}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          
+          <Stack.Screen name="(tabs)" options={{ headerShown: false}} />
           
           <Stack.Screen name="modal" options={{ presentation: 'fullScreenModal',
           headerTitle:'', headerLeft:()=>(<Ionicons 
             onPress={()=> router.back()}
             name='chevron-back' size={25} />) ,
           headerStyle:{backgroundColor:'#F4EBAA'},
-          headerRight:() =>(<Feather name='shopping-bag' size={20} />)
           }}
            />
 
            <Stack.Screen name='cart' 
            options={{headerStyle:{backgroundColor:'white'}, 
            headerTitle:'My Cart List',
+           headerTitleStyle:{color:'#000'},
            headerLeft:()=>(<Ionicons 
             onPress={()=> router.back()}
             name='chevron-back' size={25} />) 
             }}/>
           
-           <Stack.Screen name='burgers' 
-           options={{headerStyle:{backgroundColor:'white'}, 
-           headerTitle:'My Cart List',
+           <Stack.Screen name='tab1' 
+           options={{headerStyle:{backgroundColor:'white'},
+           headerTitleStyle:{color:'#000'},
+           headerTitle:'Breakfast',
            headerLeft:()=>(<Ionicons 
             onPress={()=> router.back()}
-            name='chevron-back' size={25} />) 
-            }}/>
+            name='chevron-back' size={25}
+            />) ,
+            headerRight: () => (
+              <View style={{flexDirection:'row', justifyContent:'space-evenly' ,width:80}}>
+                <IconButton 
+                icon={<Feather name='bell' size={20} />}
+                />
+                <IconButton 
+                onPress={() => router.push('cart')}
+                icon={<Feather name='shopping-bag' size={20} />}
+                />
+                
+              </View>)
+          }}/>
+           <Stack.Screen name='tab2' 
+           options={{headerStyle:{backgroundColor:'white'}, 
+           headerTitle:'Side',
+           headerTitleStyle:{color:'#000'},
+           headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25}
+            />) ,
+            headerRight: () => (
+              <View style={{flexDirection:'row', justifyContent:'space-evenly' ,width:80}}>
+                <IconButton 
+                icon={<Feather name='bell' size={20} />}
+                />
+                <IconButton 
+                onPress={() => router.push('cart')}
+                icon={<Feather name='shopping-bag' size={20} />}
+                />
+                
+              </View>)
+          }}/>
+           <Stack.Screen name='tab3' 
+           options={{headerStyle:{backgroundColor:'white'}, 
+           headerTitle:'Dessert',
+           headerTitleStyle:{color:'#000'},
+           headerLeft:()=>(<Ionicons 
+            onPress={()=> router.back()}
+            name='chevron-back' size={25}
+            />) ,
+            headerRight: () => (
+              <View style={{flexDirection:'row', justifyContent:'space-evenly' ,width:80}}>
+                <IconButton 
+                icon={<Feather name='bell' size={20} />}
+                />
+                <IconButton 
+                onPress={() => router.push('cart')}
+                icon={<Feather name='shopping-bag' size={20} />}
+                />
+                
+              </View>)
+          }}/> 
+          <Stack.Screen name='checkout' options={{headerStyle:{backgroundColor:'white'}, headerTitleStyle:{color:'black'}}}/>
           
-           <Stack.Screen name='pizzas' 
-           options={{headerStyle:{backgroundColor:'white'}, 
-           headerTitle:'My Cart List',
-           headerLeft:()=>(<Ionicons 
-            onPress={()=> router.back()}
-            name='chevron-back' size={25} />) 
-            }}/>
-           
-           <Stack.Screen name='drinks' 
-           options={{headerStyle:{backgroundColor:'white'}, 
-           headerTitle:'My Cart List',
-           headerLeft:()=>(<Ionicons 
-            onPress={()=> router.back()}
-            name='chevron-back' size={25} />) 
-            }}/>
         </Stack>
       </ThemeProvider>
     </>

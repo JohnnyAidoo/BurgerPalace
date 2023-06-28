@@ -1,17 +1,26 @@
 
 import { Dimensions, ScrollView, StyleSheet , Image , View, FlatList, ImageBackground} from 'react-native';
-import {TextInput, IconButton, Surface, Text, Button, Pressable} from '@react-native-material/core'
-import { Octicons } from '@expo/vector-icons';
+import {TextInput, IconButton, Surface, Text, Button, Pressable, AppBar} from '@react-native-material/core'
+import {  Octicons} from '@expo/vector-icons';
 import MiniCard from '../../components/minCard';
 import MediumCard from '../../components/meduimCard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { StatusBar } from 'expo-status-bar';
 
 
 
 export default function TabOneScreen() {
+  const lightcolor = '#FFF5B0'
+  const deepcolor = '#FFD24E'
 
-  const [meals, setMeals]= useState([]);
+  interface Meal{
+    idMeal:string,
+    strMeal:string,
+    strMealThumb:string
+}
+
+  const [meals, setMeals]= useState<Meal[]>([]);
 
   const numColumns:number = 2
   const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Miscellaneous'
@@ -30,9 +39,9 @@ export default function TabOneScreen() {
 
   return (
    <>
-  
-
-    <ScrollView >
+    <StatusBar style='dark' animated />
+    
+    <ScrollView style={{backgroundColor:'#fff'}} >
     <ImageBackground resizeMode='stretch' 
     style={{backgroundColor:'white'}}
     source={require('../../assets/images/img/wave.png')}>
@@ -51,9 +60,9 @@ export default function TabOneScreen() {
 
     {/* categories tab  */}
     <View style={{paddingLeft:20,paddingRight:20,flexDirection:'row',justifyContent:'space-around' , paddingTop: 10, backgroundColor:'transparent',marginBottom:10}} id='categoriesTabs'>
-      <MiniCard styles='' imageUrl={require('../../assets/images/img/burger.png')} title={'burger'} />
-      <MiniCard styles='' imageUrl={require('../../assets/images/img/pizza.png')} title={'pizza'} />
-      <MiniCard styles='' imageUrl={require('../../assets/images/img/drink.png')} title={'drinks'} />
+      <MiniCard route={'tab1'} styles='' imageUrl={require('../../assets/images/img/burger.png')} title={'BreakFast'} />
+      <MiniCard route={'tab2'} styles='' imageUrl={require('../../assets/images/img/pizza.png')} title={'Side'} />
+      <MiniCard route={'tab3'} styles='' imageUrl={require('../../assets/images/img/drink.png')} title={'Desert'} />
     </View>
     </ImageBackground>
     
@@ -62,7 +71,7 @@ export default function TabOneScreen() {
 
     {/* discount card */}
 
-    <Surface elevation={10} style={{backgroundColor:'#f9d368' , borderRadius:30, height:150,alignItems:'center', flexDirection:'row',justifyContent:'space-around'}} >
+    <Surface elevation={10} style={{backgroundColor:'#FFF5B0' , borderRadius:30, height:160,alignItems:'center', flexDirection:'row',justifyContent:'space-around'}} >
         <View  style={{width:110}}>
           <Image source={require('../../assets/images/img/logo.png')} style={{width:'100%', resizeMode:'contain'}}/>
         </View >
@@ -73,15 +82,15 @@ export default function TabOneScreen() {
           <Text variant='subtitle2'>
             Order any food from app and get the discount
           </Text>
-          <Button title='Order Now' color='#fcd22f' />
+          <Button title='Order Now' color='#FFD24E' />
         </View>
     </Surface>
 
       {/* popular foods */}
-        <View style={{flexDirection:'row', justifyContent:'space-between' , marginTop:20 }}>
+        <View style={{flexDirection:'row', justifyContent:'space-between' ,marginVertical:20}}>
           <Text>Popular Foods</Text>
           <Pressable>
-            <Text color='#fcd22f'>See all {'>'}</Text>
+            <Text color={deepcolor}>See all {'>'}</Text>
           </Pressable>
         </View>
       
@@ -92,7 +101,7 @@ export default function TabOneScreen() {
         numColumns={numColumns}
         renderItem={({item}) =>(
           <MediumCard 
-          imageUrl={{uri: item.strMealThumb}}
+          imageUrl= {item.strMealThumb}
           title={item.strMeal}
           key={item.idMeal}
           />
@@ -107,4 +116,3 @@ export default function TabOneScreen() {
    </>
   );
 }
-

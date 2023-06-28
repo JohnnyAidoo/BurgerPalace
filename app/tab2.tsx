@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { FlatList,  View } from "react-native";
+import { FlatList , View} from "react-native";
 import axios from 'axios'
 import MediumCard from "../components/meduimCard";
-import { Surface , Text} from "@react-native-material/core";
 
 
-function TopTab1() {
+function TopTab2() {
 
-    interface Meal {
-        strMeal: string,
-        strMealThumb: string,
-        idMeal: string
+    interface Meal{
+        idMeal:string,
+        strMeal:string,
+        strMealThumb:string
     }
     
     const numColumns:number = 2
 
-    const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast'
+    const url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Side'
     const [meals, setMeals] = useState<Meal[]>([])
     useEffect(() =>{
         const fetchdata = async () =>{
@@ -31,24 +30,22 @@ function TopTab1() {
 
     return (
         <>
-        <View style={{backgroundColor:'#fff', width:'100%',height:'100%'}}>
+        <View style={{backgroundColor:'#fff'}}>
         <FlatList 
         data={meals}
         numColumns={numColumns}
         renderItem={({item}) =>(
-          <MediumCard 
-          imageUrl= {item.strMealThumb}
-          title={item.strMeal}
-          key={item.idMeal}
-          />
+            <MediumCard 
+            imageUrl={item.strMealThumb}
+            title={item.strMeal}
+            key={item.idMeal}
+            />
         )}
-         
+        
         />
         </View>
-
-        {/**/}
         </>
     );
 }
 
-export default TopTab1;
+export default TopTab2;
